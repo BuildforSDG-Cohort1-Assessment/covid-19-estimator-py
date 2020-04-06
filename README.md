@@ -1,4 +1,4 @@
-# #BuildForSDG Cohort-1 JavaScript Assessment
+# #BuildForSDG Cohort-1 Python Assessment
 
 > Build an overly simplified COVID-19 infection impact estimator
 
