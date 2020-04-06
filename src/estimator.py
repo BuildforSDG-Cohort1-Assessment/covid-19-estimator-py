@@ -1,2 +1,2 @@
-def covid19_impact_estimator(data):
+def estimator(data):
   return data
