@@ -55,7 +55,7 @@ jobs:
 
     - name: Install Deps
       run: |
-        pip install py pytest-jest pytest-json
+        pip install requests py pytest-jest pytest-json
         pip install --editable .
         yarn install
         yarn remove jest 
@@ -99,7 +99,7 @@ jobs:
 
     - name: Install Deps
       run: |
-        pip install py pytest-jest pytest-json
+        pip install requests py pytest-jest pytest-json
         pip install --editable .
         yarn install
         yarn remove jest 
@@ -143,7 +143,7 @@ jobs:
 
     - name: Install Deps
       run: |
-        pip install py pytest-jest pytest-json
+        pip install requests py pytest-jest pytest-json
         pip install --editable .
         yarn install
         yarn remove jest 
