@@ -12,24 +12,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
-        yarn install
-        yarn add eslint@^6.8.0 eslint-plugin-import@^2.20.1 eslint-config-airbnb-base@^14.0.0
+        python -m pip install --upgrade pip
         
     - name: Run Audits
-      run: yarn eslint ./src/
+      run: |
+        pip install flake8
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 ./src/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 ./src/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   ch-1:
     needs: lint
@@ -38,30 +42,33 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
+        pip install pytest
         yarn install
         yarn add jest axios on-covid-19 @babel/core @babel/preset-env babel-jest @actions/core @actions/github
     
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-1 --json --outputFile=audits/ch-1.json --noStackTrace
+      run: |
+        pytest
+        npx jest audits/ch-1 --json --outputFile=audits/ch-1.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -77,30 +84,33 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
+        pip install pytest
         yarn install
         yarn add jest axios on-covid-19 @babel/core @babel/preset-env babel-jest @actions/core @actions/github
     
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-2 --json --outputFile=audits/ch-2.json --noStackTrace
+      run: |
+        pytest
+        npx jest audits/ch-2 --json --outputFile=audits/ch-2.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -116,30 +126,33 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
+        pip install pytest
         yarn install
         yarn add jest axios on-covid-19 @babel/core @babel/preset-env babel-jest @actions/core @actions/github
     
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-3 --json --outputFile=audits/ch-3.json --noStackTrace
+      run: |
+        pytest
+        npx jest audits/ch-3 --json --outputFile=audits/ch-3.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -155,16 +168,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: yarn add axios properties-reader @lhci/cli@0.3.x @actions/core @actions/github
@@ -172,7 +185,7 @@ jobs:
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
     
     - name: Injest Properties
@@ -195,16 +208,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
@@ -213,7 +226,7 @@ jobs:
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
     - name: Run Audits
@@ -233,16 +246,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        python-version: [3.7]
 
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
     - name: Prepare To Install
-      uses: actions/setup-node@v1
+      uses: actions/setup-python@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Deps
       run: |
@@ -251,7 +264,7 @@ jobs:
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
-        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
     - name: Run Audits
