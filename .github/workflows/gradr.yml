@@ -68,6 +68,11 @@ jobs:
         repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-py
         path: audits
 
+    - name: List files
+      run: |
+       ls -al audits
+       ls -al audits/ch-1
+
     - name: Run Audits
       run: |
         yarn jest audits/ch-1 --json --outputFile=audits/ch-1.json --noStackTrace
