@@ -27,10 +27,11 @@ const getStatsFor = (lang, task) => {
     // JSON:: report > summary > passed | num_tests
     const json = fs.readFileSync(`${process.cwd()}/audits/${task}.json`, 'utf8');
     const data = JSON.parse(json);
+    console.log(data);
 
-    const payload = data.report.summary;
-    stats.totalTests = payload.num_tests;
-    stats.passedTests = payload.passed;
+    // const payload = data.report.summary;
+    // stats.totalTests = payload.num_tests;
+    // stats.passedTests = payload.passed;
   }
 
   if (lang === 'php') {
