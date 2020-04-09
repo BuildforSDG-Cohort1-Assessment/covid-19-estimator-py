@@ -205,6 +205,12 @@ jobs:
 
     - name: Install Deps
       run: yarn add axios properties-reader @lhci/cli@0.3.x @actions/core @actions/github
+
+    - name: Prepare Audits
+      uses: actions/checkout@v2
+      with: 
+        repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
+        path: audits
     
     - name: Injest Properties
       id: props
@@ -248,9 +254,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: |
-        yarn install
-        npx jest audits/ch-4 --json --outputFile=audits/ch-4.json --noStackTrace
+      run: npx jest audits/ch-4 --json --outputFile=audits/ch-4.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -288,9 +292,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: |
-        yarn install
-        npx jest audits/ch-5 --json --outputFile=audits/ch-5.json --noStackTrace
+      run: npx jest audits/ch-5 --json --outputFile=audits/ch-5.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
