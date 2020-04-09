@@ -125,8 +125,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: |
-        yarn jest audits/ch-2 --json --outputFile=audits/ch-2.json --noStackTrace
+      run: yarn jest audits/ch-2 --json --outputFile=audits/ch-2.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -175,8 +174,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: |
-        yarn jest audits/ch-3 --json --outputFile=audits/ch-3.json --noStackTrace
+      run: yarn jest audits/ch-3 --json --outputFile=audits/ch-3.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -244,9 +242,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install Deps
-      run: |
-        yarn install
-        yarn add jest axios on-covid-19 properties-reader xml2json puppeteer @babel/core @babel/preset-env babel-jest @actions/core @actions/github
+      run: yarn add jest axios on-covid-19 properties-reader xml2json puppeteer @babel/core @babel/preset-env babel-jest @actions/core @actions/github
+
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
@@ -254,7 +251,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-4 --json --outputFile=audits/ch-4.json --noStackTrace
+      run: npx jest --config=audits/jest.config.js audits/ch-4 --json --outputFile=audits/ch-4.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
@@ -282,9 +279,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install Deps
-      run: |
-        yarn install
-        yarn add jest axios on-covid-19 properties-reader xml2json @babel/core @babel/preset-env babel-jest @actions/core @actions/github
+      run: yarn add jest axios on-covid-19 properties-reader xml2json @babel/core @babel/preset-env babel-jest @actions/core @actions/github
+
     - name: Prepare Audits
       uses: actions/checkout@v2
       with: 
@@ -292,7 +288,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-5 --json --outputFile=audits/ch-5.json --noStackTrace
+      run: npx jest --config=audits/jest.config.js audits/ch-5 --json --outputFile=audits/ch-5.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
