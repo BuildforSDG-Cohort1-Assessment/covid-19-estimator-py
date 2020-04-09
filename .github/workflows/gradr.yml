@@ -292,7 +292,7 @@ jobs:
         path: audits
 
     - name: Run Audits
-      run: npx jest audits/ch-5/estimator.test.js --json --outputFile=audits/ch-5.json --noStackTrace
+      run: npx jest -t audits/ch-5/estimator.test.js --json --outputFile=audits/ch-5.json --noStackTrace
 
     - name: Report Audits
       uses: ./.github/actions/jest-out
