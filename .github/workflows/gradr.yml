@@ -79,7 +79,7 @@ jobs:
         yarn jest audits/ch-1 --json --outputFile=audits/ch-1.json --noStackTrace
 
     - name: Report Audits
-      uses: ./.github/actions/jest-out
+      uses: BuildforSDG-Cohort1-Assessment/jest-out@v1
       with:
         challenge: ch-1
         lang: python
@@ -128,7 +128,7 @@ jobs:
       run: yarn jest audits/ch-2 --json --outputFile=audits/ch-2.json --noStackTrace
 
     - name: Report Audits
-      uses: ./.github/actions/jest-out
+      uses: BuildforSDG-Cohort1-Assessment/jest-out@v1
       with:
         challenge: ch-2
         lang: python
@@ -177,7 +177,7 @@ jobs:
       run: yarn jest audits/ch-3 --json --outputFile=audits/ch-3.json --noStackTrace
 
     - name: Report Audits
-      uses: ./.github/actions/jest-out
+      uses: BuildforSDG-Cohort1-Assessment/jest-out@v1
       with:
         challenge: ch-3
         lang: python
@@ -186,7 +186,7 @@ jobs:
   lighthouse:
     needs: ch-3
     name: audit frontend app (lighthouse)
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
@@ -210,23 +210,24 @@ jobs:
         repository: BuildforSDG-Cohort1-Assessment/covid-19-estimator-audits-js
         path: audits
     
-    - name: Injest Properties
+    - name: Injest Frontend App URL
       id: props
-      uses: ./.github/actions/props-out
+      uses: chalu/properties-io@v1
+      with:
+        file: ./app.properties
+        read-from: frontend.url
     
     - name: Run Audits
-      run: npx lhci autorun --collect.url=${{ steps.props.outputs.frontend }} --config=./audits/lighthouserc.json
+      run: npx lhci autorun --collect.url=${{ steps.props.outputs.value }} --config=./audits/lighthouserc.json
     
     - name: Report Audits
-      uses: ./.github/actions/lhr-out
-      with:
-        lang: javascript
+      uses: BuildforSDG-Cohort1-Assessment/lighthouse-out@v1
       if: always()
   
   ch-4:
     needs: lighthouse
     name: audit frontend UI
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
@@ -254,7 +255,7 @@ jobs:
       run: npx jest --config=audits/jest.config.js audits/ch-4 --json --outputFile=audits/ch-4.json --noStackTrace
 
     - name: Report Audits
-      uses: ./.github/actions/jest-out
+      uses: BuildforSDG-Cohort1-Assessment/jest-out@v1
       with:
         challenge: ch-4
         lang: javascript
@@ -263,7 +264,7 @@ jobs:
   ch-5:
     needs: ch-3
     name: audit backend API
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     strategy:
       matrix:
@@ -291,7 +292,7 @@ jobs:
       run: npx jest --config=audits/jest.config.js audits/ch-5 --json --outputFile=audits/ch-5.json --noStackTrace
 
     - name: Report Audits
-      uses: ./.github/actions/jest-out
+      uses: BuildforSDG-Cohort1-Assessment/jest-out@v1
       with:
         challenge: ch-5
         lang: javascript
