@@ -1,14 +1,15 @@
-data = {}
 def estimator(data):
-	
-	name = data['name']
+	region = data['region']
+	name = data['region']['name']
 	periodType = data['periodType']
 	timeToElapse = data['timeToElapse']
 	reportedCases = data['reportedCases']
 	population = data['population']
 	totalHospitalBeds = data['totalHospitalBeds']
-	avgDailyIncomePopulation = data['avgDailyIncomePopulation']
-	avgDailyIncomeInUSD = data['avgDailyIncomeInUSD']
+
+	avgAge = data['region']['avgAge']
+	avgDailyIncomePopulation = data['region']['avgDailyIncomePopulation']
+	avgDailyIncomeInUSD = data['region']['avgDailyIncomeInUSD']
 
 # Cleaning Input Data
 	periodType = periodType.lower()
@@ -35,6 +36,15 @@ def estimator(data):
 						* avgDailyIncomePopulation 
 						* avgDailyIncomeInUSD
 						/ timeToElapse))
+	impact = {
+			"currentlyInfected" : currentlyInfected,
+			"infectionsByRequestedTime" : infectionsByRequestedTime,
+			"severeCasesByRequestedTime" : severeCasesByRequestedTime,
+			"hospitalBedsByRequestedTime" : hospitalBedsByRequestedTime,
+			"casesForICUByRequestedTime" : casesForICUByRequestedTime,
+			"casesForVentilatorsByRequestedTime" : casesForVentilatorsByRequestedTime,
+			"dollarsInFlight" : dollarsInFlight
+	}
 
 	# Computing SevereImpact
 	SIcurrentlyInfected = reportedCases * 50
@@ -51,48 +61,29 @@ def estimator(data):
 						* avgDailyIncomePopulation 
 						* avgDailyIncomeInUSD
 						/ timeToElapse))
+	severeImpact = {
+					"currentlyInfected" : SIcurrentlyInfected,
+					"infectionsByRequestedTime" : SIinfectionsByRequestedTime,
+					"severeCasesByRequestedTime" : SIsevereCasesByRequestedTime,
+					"hospitalBedsByRequestedTime" : SIhospitalBedsByRequestedTime,
+					"casesForICUByRequestedTime" :SIcasesForICUByRequestedTime,
+					"casesForVentilatorsByRequestedTime" : SIcasesForVentilatorsByRequestedTime,
+					"dollarsInFlight" : SIdollarsInFlight
+	}
+
+	estimate = {
+				"impact": impact,
+				"severeImpact": severeImpact
+	}
 	# Result
 	global output
 	output = {
-			"data":{
-		  "region":{
-			"name":data["name"],
-			"avgAge": data['avgAge'],
-			"avgDailyIncomeInUSD": data['avgDailyIncomeInUSD'],
-			"avgDailyIncomePopulation": data['avgDailyIncomePopulation']
-		},
-		"periodType":periodType,
-		"timeToElapse":timeToElapse,
-		"reportedCases":reportedCases,
-		"population":population,
-		"totalHospitalBeds":totalHospitalBeds
-		},
-
-		"estimate" : {
-			"impact" : {
-				"currentlyInfected" : currentlyInfected,
-				"infectionsByRequestedTime" : infectionsByRequestedTime,
-				"severeCasesByRequestedTime" : severeCasesByRequestedTime,
-				"hospitalBedsByRequestedTime" : hospitalBedsByRequestedTime,
-				"casesForICUByRequestedTime" : casesForICUByRequestedTime,
-				"casesForVentilatorsByRequestedTime" : casesForVentilatorsByRequestedTime,
-				"dollarsInFlight" : dollarsInFlight
-				},
-			"severeImpact" : {
-				"currentlyInfected" : SIcurrentlyInfected,
-				"infectionsByRequestedTime" : SIinfectionsByRequestedTime,
-				"severeCasesByRequestedTime" : SIsevereCasesByRequestedTime,
-				"hospitalBedsByRequestedTime" : SIhospitalBedsByRequestedTime,
-				"casesForICUByRequestedTime" :SIcasesForICUByRequestedTime,
-				"casesForVentilatorsByRequestedTime" : SIcasesForVentilatorsByRequestedTime,
-				"dollarsInFlight" : SIdollarsInFlight
-			}
-
-		}
-
+			"data": data,
+			"estimate": estimate
 	}
 	
 
-	#estimate_schema = json.dumps(output, sort_keys =False, indent =4)
-	#print(estimate_schema)
 	return output
+
+#y = estimator({'periodType': 'days', 'timeToElapse': 38, 'population': 3835811, 'region': {'avgAge': 19.7, 'avgDailyIncomeInUSD': 3, 'avgDailyIncomePopulation': 0.73, 'name': 'Africa'}, 'reportedCases': 2037, 'totalHospitalBeds': 4534})
+#print (y)
