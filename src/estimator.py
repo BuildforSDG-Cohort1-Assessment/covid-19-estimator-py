@@ -1,6 +1,6 @@
+data = {}
 def estimator(data):
-	data = {}
-
+	
 	name = data['name']
 	periodType = data['periodType']
 	timeToElapse = data['timeToElapse']
